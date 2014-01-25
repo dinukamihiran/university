@@ -1,0 +1,2 @@
+module GpaHelper
+end

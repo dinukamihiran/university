@@ -1,0 +1,14 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+ <div class="alert alert-info">
+	     
+	<h4>Your Message Box</h4>
+	<ul>
+	  <li><%= link_to 'Inbox' , messages_path(:type => "in") %></li>
+	  <li><%= link_to 'Sent Items' ,messages_path(:type => "out" , :page => 1) %></li>
+	</ul>
+ </div>
+ </div>
+ </div>
+ </div>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Univesity</title> 
+<%= include_gon %> 
+
+  <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+<% if user_signed_in? %>
+<div class="container">
+                        <div class="navbar ">
+                                <div class="navbar-inner">
+                                        <ul class="nav">
+										        <li class="active">
+                                                        <%= link_to 'Main', main_page_index_path, :class => 'navbar-link' %> 
+                                                </li>
+                                                <li>
+                                                        <%= link_to 'My Status' , statuses_path, :class => 'navbar-link'%>
+                                                </li>
+                                                <li>
+                                                        <%= link_to 'Messages' , messages_select_inbox_outbox_path, :class => 'navbar-link'%>
+                                                </li>
+                                                <li>
+                                                        <%= link_to 'Q & A' , questions_select_semester_path, :class => 'navbar-link' %>
+                                                </li>
+												<li>
+                                                        <%= link_to 'GPA', gpa_enter_level_semester_path, :class => 'navbar-link' %> 
+                                                </li>
+												<li>
+                                                        <%= link_to 'Materials', resumes_select_semester_path, :class => 'navbar-link' %> 
+                                                </li>
+												
+
+                                        </ul>
+
+                                        <ul class="nav pull-right">
+                                                <a class="brand" style="float: left;font-size: 12pt;" >Login as : <%= current_user.full_name %></a>
+
+												<li class="divider-vertical">
+												    <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> 
+												</li>
+                                                <li class="divider-vertical">
+                                                         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+                                                </li>
+
+                                        </ul>
+
+                                </div>
+                        </div>
+                </div>
+
+                <div class="container pull-left">
+                        <div class="navbar navbar-fixed-bottom">
+                                <div class="navbar-inner">
+                                        <ul class="nav" style="margin-left: 25%;">
+                                                <li>
+                                                        <a href="" >2013 &copy; A K D M Karunarathne</a> 
+                                                </li>
+                                                <li>
+                                                        <%= link_to "About" ,main_page_about_path, :class => 'navbar-link' %> 
+                                                </li>
+                                                <li>
+                                                        <%= link_to "Contact" ,main_page_contact_path, :class => 'navbar-link' %> 
+                                                </li>
+                                                <li>
+                                                         <%= link_to "Blog" ,main_page_terms_path, :class => 'navbar-link' %>
+                                                </li>
+                                                <li>
+                                                         <%= link_to "Status" ,main_page_terms_path, :class => 'navbar-link' %>
+                                                </li>
+                                                <li>
+                                                         <%= link_to "API" ,main_page_terms_path, :class => 'navbar-link' %>
+                                                </li>
+                                                <li>
+                                                        <%= link_to "Help" ,main_page_help_path, :class => 'navbar-link' %>
+                                                </li>
+                                                <li>
+                                                        <%= link_to "Terms" ,main_page_terms_path, :class => 'navbar-link' %> 
+                                                </li>
+                                                <li>
+                                                        <%= link_to "Privacy" ,main_page_privacy_path, :class => 'navbar-link' %> 
+                                                </li>
+                                        </ul>
+
+                                </div>
+                        </div>
+                </div>
+
+                <div id="global_navigations_div" class="wrapper">
+                        <div class="navigation_buttons">
+                               <center><b> Site status :still developping </b></center>
+                        </div>
+
+                </div>
+                <hr />
+
+                <div class="wrapper" >
+				   <% if flash[:message] %>
+                        <div class="alert">
+                                <label style="color: red">Message: <%= flash[:message]%></label>
+                        </div>
+                        <% end %>
+						 
+				
+                </div>
+ 
+  
+  
+<% else %>
+  
+<% end %>
+<% if notice %>
+  <p class="alert alert-notice"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-error"><%= alert %></p>
+<% end %>
+<%= yield %>
+
+</body>
+</html>

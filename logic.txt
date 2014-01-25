@@ -1,0 +1,25 @@
+steps
+
+step 1 :- number of subjects ganata length eka tiyena string ekak create kra ganna
+          (string length eka subject ganata wada wadi unata kamak na)
+
+Ex- number of subjects =4
+    so, string s=0123
+
+step 2 :- :"#{$s}"[$i][0] return kranne ["0"=>"2.5","1"=>"2.5","2"=>"2.5","1"=>"2.5"]
+          mehema gattot subject 10 ta wada wadi unama identify kraganna bari wenawa
+          eka nis 2D array ekak wenuwada normal array ekak return kranna
+          
+          format :- ["1","2.5","1","2.5","1","2.5","1","2.5"]
+                    subject name ekai grade ekai ekak hara ekak retun kranawa array eken
+                    :"#{$s}"[$i][1] use kranna
+                    :"#{$s}"[$i][2] unat kamak na.(any number)
+                    logic : - athtatama "s"kiyana string eka single array ekak.
+                              methanadi eka 2D widiyata aran tibunat return kranne 1 value ekai
+                              so , 0 wenuwata wena number ekak dala awashya data single array ekakata ganna puluwan
+
+          s kiyana string eka hardcode krat kamak na.habai aniwaryen number of subjects ganata samana ho wadi wenna one
+
+
+         <%= f.label :#{$s}"[$i][0] add krata wadak na.because it is a label.label wala value next form 
+         ekata pass wenne na

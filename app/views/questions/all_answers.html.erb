@@ -1,0 +1,119 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+   
+  <h3>Question : </h3>
+   <div class="alert alert-warning">
+      <%= $question_container[$selected_question_array_id.to_i]  %> 
+	  <br/>
+	  Asked by :
+	   <%= $selected_question_asked_user.full_name %>
+	  <br/>
+	  Asked at : <%= time_ago_in_words(@question_start.created_at) %> ago
+	  <%= button_to "Remove Question" ,questions_delete_question_path(:id => @question_start.id) ,method: :delete ,class: "btn btn-danger", confirm: "Are you sure that you wish to delete the question?" %>
+		
+   </div>	
+
+ <%= form_for :answer, :url => questions_create_answer_path do |f| %>    
+	  
+    <%= f.label :answer_content %>
+    <%= f.text_area :answer_content,  :class => "txt_area_size" %>
+ 
+	<%= f.hidden_field :question_id, :value => $selected_question_id %>
+	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<br/><br/>
+    <%= f.submit "Add answer", class: "btn btn-primary" %>
+	<% end %>    
+ 
+ <h3>Answers : </h3>	
+   <% if @answers.blank? %>
+    <div class="alert alert-warning">
+      Currently there is no answers 
+	</div>
+  <% end %>
+  
+ 
+ <% @answers.each do |answer| %>
+	<div class="alert alert-success">
+ 
+	  Answer : <%= answer.answer_content %><br/> 
+		Answer by : 
+          <% if answer.user_id == current_user.id %>
+							  You
+		 <% else %>
+         	       <%= answer.user.full_name %> 
+		 <% end %>
+		 <br/>
+		Answer at : <%= time_ago_in_words(answer.created_at) %> ago
+		<% if current_user.id == answer.user_id %>
+			   <%= link_to "Remove Answer" ,questions_delete_answer_path(:id => answer.id) ,method: :delete , confirm: "Are you sure that you wish to delete #{answer.id}?" %>
+		<% end %>					   
+	</div>
+		 Comments :
+				<table class="table table-bordered table-striped">
+				  
+					  <% answer.replies.each do |reply| %>
+						<tr>
+						  <td>
+						  <%= reply.reply_content %> 
+						  <br/>
+						   Reply by :
+						    <% if reply.user_id == current_user.id %>
+							  You
+							<% else %>
+						           <%= reply.user.full_name %>
+						    <% end %>
+						  <br/>
+						   Reply at :<%= time_ago_in_words(reply.created_at)  %> ago
+						  
+						  </td>
+						    <td>
+							<% if current_user.id == reply.user_id %>
+						       <%= link_to "Remove comment" ,questions_delete_reply_path(:id => reply.id) ,method: :delete , confirm: "Are you sure that you wish to delete #{reply.id}?" %>
+							   
+							<% end %>
+                            </td>
+                            </tr>
+											 
+					 <% end %><br/>
+				   
+                 </table>	
+				    <span id ="buttonToggle_<%= answer.id %>" style="color:rgb(0, 85, 128); cursor:pointer"><%= image_tag("reply.jpg", :alt => "rss feed") %>Reply</span>  		
+						
+                      <%= form_for :reply, :url => questions_create_reply_path do |f| %>  
+                            <span id ='al_<%= answer.id %>'><%= f.label :reply_content %></span>
+                            <span id ='at_<%= answer.id %>'><%= f.text_area :reply_content, :class => "txt_area_size" %></span>
+						 
+							<%= f.hidden_field :answer_id, :value => answer.id %>
+							<%= f.hidden_field :user_id, :value => current_user.id %>
+							<br/><br/>
+                            <span id ='as_<%= answer.id %>'><%= f.submit "Add Comment", class: "btn btn-success" %></span>
+					 <% end %>	 
+					 
+	<script type ="text/javascript">
+	 $(document).ready(function() {
+	   $('#buttonToggle_<%= answer.id %>').click(function() {
+		 $('#al_<%= answer.id %>').toggle();
+		 $('#at_<%= answer.id %>').toggle();
+		 $('#as_<%= answer.id %>').toggle();	 
+	  });
+	});
+	$(document).ready(function() {
+		$('#al_<%= answer.id %>').hide();
+		 $('#at_<%= answer.id %>').hide();
+		 $('#as_<%= answer.id %>').hide();	 
+	});
+	 
+	</script>	 
+ <% end %> 
+  
+   <%= link_to "Back", questions_all_questions_path(:sub_id => $selected_subject_id ) %>
+  <br/>
+  <br/>
+  <br/>   
+ <br/>
+  <br/>
+  <br/>
+ </div>
+ </div>
+ </div>

@@ -1,0 +1,78 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+   
+  <h3>Message : </h3>
+   <div class="alert alert-warning">
+      
+      <%= $message_container[$selected_message_array_id.to_i]  %> <br/>
+  
+ From : 
+ 
+    <% if $selected_message_start_user.id == current_user.id %>
+	  You 
+	 <%else %>
+	   <%= $selected_message_start_user.full_name %> 
+	 <% end %>
+	 <br/>
+	  <% if $type == "in" %>
+	    Receive at :
+	  <% else %>
+	    Send at :
+	  <% end %>
+	   <%= time_ago_in_words(@message_start.created_at) %> ago
+	   
+	 </div> 
+ 
+ <h3>Replies : </h3>	
+   <% if @responses.blank? %>
+    <div class="alert alert-warning">
+      Currently there is no reply from reciepient 
+	</div>
+   <% end %>
+   
+  
+     <table class="table table-bordered table-striped">				  
+					   <% @responses.each do |response| %>
+						<tr>
+						  <td><%= response.response_content %><br/>
+						  From :
+						    <% if current_user.id == response.user_id %>						    
+						          You
+							<% else %>
+							 <%= response.user.full_name %>
+							  <% end %>
+							  <br/>
+							    Reply at : <%= time_ago_in_words(response.created_at) %> ago
+              				  </td>
+						    <td>
+							<% if current_user.id == response.user_id %>
+						       <%= link_to "Remove reply" ,messages_delete_response_path(:id => response.id) ,method: :delete , confirm: "Are you sure that you wish to delete your reply?" %>
+							    
+							<% end %>
+							 
+                            </td>							
+						</tr>
+					 <% end %><br/>
+				   
+                 </table>				  
+					 <%= form_for :response, :url => messages_create_response_path do |f| %>  
+							<%= f.label :response_content %>
+							<%= f.text_area :response_content,  :class => "txt_area_size" %>
+						 
+						  	
+							
+						    <%= f.hidden_field :message_id, :value =>$selected_message_id %> 
+							<%= f.hidden_field :user_id, :value => current_user.id %>
+							<br/><br/>
+							<%= f.submit "reply", class: "btn btn-success" %>
+					 <% end %>
+					 <%= link_to 'Back' , messages_path(:type => $type) %>
+    <br/>
+	<br/>
+	<br/>
+	<br/>
+	
+</div>
+</div>
+</div>

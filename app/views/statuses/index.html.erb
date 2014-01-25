@@ -1,0 +1,61 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+   
+   <div class="alert alert-info">
+	  Your status
+	  </div>
+	  
+  <%= session[:dinuka]%>
+  
+  <div class = "navbar-form pull-right">
+            <%= form_for :search_user , :url => statuses_find_user_path do |f|   %>
+		      <%= f.text_field :user_id  , :placeholder => "search" ,:class => "user_name","data-pre" => @users.to_json  %> 
+		    <%= f.submit "Search", class: "btn btn-default"  %> 
+		<% end %>
+</div>
+  
+     <b>
+         <%= current_user.statuses.size %> Status
+         <%= current_user.followers.count %> Followers 
+         <%= current_user.followeds.count %> Following 
+	  </b> 
+		 
+  <%= form_for @status do |f| %>
+    <%= f.label :status_content %>
+	 <%= f.text_area :status_content, :class => "txt_area_size" %> 
+	<%= f.hidden_field :user_id , :value => current_user.id %>
+	<%= f.submit 'Post' , :class => "btn btn-primary" %>
+  
+  <% end %>
+  
+   
+  
+ <% @ribbits.each do |ribbit| %>
+          <% if ribbit.user.id == current_user.id %> 
+			 <div class="alert alert-warning">
+	            <%=  "You" %> 
+				 @<%= ribbit.status_content %><br/>
+				 <%= time_ago_in_words(ribbit.created_at) %> ago
+				 <%= link_to 'delete' , status_path(ribbit) , method: :delete, data: { confirm: 'Are you sure?' } %><br/> 
+	         </div>
+		  <% else %>
+		  <div class="alert alert-success">
+			  <a href="<%= statuses_user_profile_path(:user_id => ribbit.user.id)  %>">
+				  <%= ribbit.user.full_name %> 
+				</a>
+				@<%= ribbit.status_content %><br/>
+				 <%= time_ago_in_words(ribbit.created_at) %><br/> 
+          </div>
+		  <% end %>   
+        
+    <% end %>
+  
+  <br/>
+  <br/>
+  <br/>
+  
+  
+  </div>
+  </div>
+  </div>

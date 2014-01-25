@@ -1,0 +1,42 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+    
+	<% if !@question.errors.empty? %>
+  <div class="alert alert-error">
+    <ul>
+      <% @question.errors.full_messages.each do |msg| %> 
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+ <div class = "alert alert-warning">
+<h4>Add new Question to the Level <%= $level %> Semester <%= $semester %> Subject <%= $selected_subject_name %>  </h4>
+ 	  
+   
+  <%= form_for @question do |f| %>  
+    
+	<%= f.label :level %>
+    <%= f.text_field :level,:readonly => true , :value => $level %>
+	
+	<%= f.label :semester %>
+    <%= f.text_field :semester ,:readonly => true , :value => $semester %>
+	 
+    <%= f.label :question_content %>
+    <%= f.text_area :question_content,  :class => "txt_area_size" %>
+ 
+	<%= f.hidden_field :subject_id, :value => $selected_subject_id %>
+	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<br/><br/>
+    <%= f.submit "Add Question", class: "btn btn-primary" %>
+	or <%= link_to "Back", questions_all_questions_path(:sub_id => $selected_subject_id ) %>
+  
+  <% end %>  
+   
+</div>
+</div>
+</div>
+<br/><br/>
+<br/><br/>

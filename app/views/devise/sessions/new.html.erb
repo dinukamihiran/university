@@ -1,0 +1,63 @@
+<H3><center>Welcome to Student information system</center></H3>
+<div class="jumbotron">
+  <div class="container">
+   <div class="hero-unit" style="width: 30%;margin-left: 28%;margin-top: -1%;padding-left: 5%;"  >
+	<h3><center>Sign in<center></h3>
+
+	<table border="0">
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+ 
+  <tr>
+   <td>
+    <%= f.label :username %> 
+   </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   <td>
+      <%= f.text_field :username, :autofocus => true %>
+   </td>
+  </tr>
+  <tr>
+   <td>
+  <%= f.label :password %> 
+  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   <td>
+  <%= f.password_field :password %>
+   </td>
+  </tr>
+  <tr>
+   <td>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+	 
+
+  <% if devise_mapping.rememberable? -%>
+  <td>
+     <%= f.check_box :remember_me %>
+	 </td>
+	 <td>
+	 <%= f.label :remember_me %> 
+	 </td></tr>
+  <% end -%>
+   <tr>
+   <td>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+	 <td></td>
+	 <td>
+  <%= f.submit "Sign in", :class => 'btn btn-primary' %> 
+  </td>
+  </tr>
+  
+<% end %>
+ <tr>
+   <td>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+	 <td></td>
+	 <td>
+or <%= link_to "Sign Up" ,new_user_registration_path, :class => 'btn btn-link' %>
+</td>
+  </tr>
+  </table>
+</div>
+</div>
+</div>

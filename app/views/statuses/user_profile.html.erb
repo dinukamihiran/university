@@ -1,0 +1,47 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+   
+   <div class="alert alert-info">
+	  <%= $user_status_name.full_name %> 's profile
+	  </div>
+	  
+	  <div class = "navbar-form pull-right">
+            <%= form_for :search_user , :url => statuses_find_user_path do |f|   %>
+		      <%= f.text_field :user_id  , :placeholder => "search" ,:class => "user_name","data-pre" => @users.to_json  %> 
+		    <%= f.submit "Search", class: "btn btn-default"  %> 
+		<% end %>
+  </div>
+	 <br/>
+	  <b>
+         <%= $user_status_name.statuses.size %> Status
+         <%= $user_status_name.followers.count %> Followers 
+         <%= $user_status_name.followeds.count %> Following 
+	  </b> 
+		 
+	   <%= form_for :follow , :url => statuses_relationships_create_path do|f| %> 
+	      <%= f.hidden_field :follower_id , :value => current_user.id %> 
+		  <%= f.hidden_field :followed_id , :value => $user_status_name.id %> 
+	      <% if @relation.blank? %>
+		       <%= f.hidden_field :command , :value => "follow" %>
+			   <%= f.submit "Follow" , :class => "btn btn-primary" %> 
+			<% else %>
+			   <%= f.hidden_field :command , :value => "unfollow" %>
+			   <%= f.hidden_field :follow_id , :value => @relation[0][:id] %>
+			   <%= f.submit "Unfollow" , :class => "btn btn-primary" %>
+			<% end %>
+	   <% end %>
+	   
+	  <% @user_statuses.each do |user_statuses| %>
+	    <div class="alert alert-warning">
+		  <%= user_statuses.user.full_name %>
+	      @<%= user_statuses.status_content %><br/>
+		  <%= time_ago_in_words(user_statuses.created_at) %>
+	    </div>
+	  <% end %>
+	  
+	<%= link_to "Back" ,statuses_path %>  
+	  
+</div>
+</div>
+</div>

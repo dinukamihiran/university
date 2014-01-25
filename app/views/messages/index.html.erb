@@ -1,0 +1,118 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+  
+
+ <div class = "alert alert-warning">
+<h4>Your current mesages </h4>
+</div>
+ 
+ 
+<div class = "navbar-form pull-right">
+          <%= search_form_for @search  do |f|   %>
+		   <% if $type == "out" %>
+		     Enter the receipient : <%= f.text_field :receiver_id_eq  , :placeholder => "search" ,:class => "user_name","data-pre" => @users.to_json  %>
+		   <% elsif $type == "in" %>
+		     Enter the sender : <%= f.text_field :user_id_eq  , :placeholder => "search" ,:class => "user_name","data-pre" => @users.to_json  %> 
+		   <% else %>
+		   <% end %>
+		    <%= f.hidden_field :type, :value => $type %>
+            <%= f.submit "Search", class: "btn btn-default"  %> 
+		<% end %>
+</div>
+
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Message</th>
+	  <th>
+	  <% if $type == "in" %>
+	     From
+	  <% else %>
+	      To
+	  <% end %></th>
+      <th>&nbsp;</th>
+	  <% if $type == "out" %>
+	   <th>&nbsp;</th> 
+	  <% end %>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <% $message_container = Array.new %> 
+    
+	  <% $no_of_messages = 0 %>
+  
+   <% if @messages.blank? %>
+     <tr><td colspan='5'>There is no messages</td></tr>
+   <% else %>
+     <% @messages.each do |message| %>
+	 <tr>
+        <td><%= message.message_content %>
+			<br/><% if $type == "in" %> Receive at : <% else %> Send at : <% end %>
+			<%= time_ago_in_words(message.created_at) %> ago
+		</td>
+		  <% if $type == "in" %>
+			<td><%= message.user.full_name %></td>
+		  <% elsif $type == "out" %>
+		       	<td>  
+				 <% if $stable == 1 %>
+				     <%= $us[0].full_name %>
+				 <% else %>
+					 <%= @mes_receiver[$no_of_receivers].full_name %>
+					 <% $no_of_receivers = $no_of_receivers + 1%> 
+	              <% end %>
+					 </td>
+					
+		  <% end %>
+        <td><%= link_to "Reply", messages_reply_to_message_path(:message_id => message.id , :message_array_id => $no_of_messages) %>  </td>
+		
+		 
+		<% if $type == "out" %>
+		<td>
+		<%= link_to "Delete",  messages_delete_message_path(:id => message.id), method: :delete,  confirm: "Are you sure that you wish to delete message?" %>
+		</td>
+		<% end %>	  
+		  
+      </tr>
+	     <% $message_container[$no_of_messages] = message.message_content %>
+		 <% $no_of_messages = $no_of_messages + 1%>
+		 
+    <% end %>
+   <% end %>
+  </tbody>
+</table>
+
+    
+ 
+<div class="digg_pagination">
+      <div clas="page_info">
+        <%= page_entries_info @messages %>
+      </div>
+      <%= will_paginate @messages, :container => false %>
+    </div>
+
+<% if $type == "out" %>
+<%= form_for :new_message , :url => messages_send_message_path do |f| %>
+  
+  <%= f.label :receiver_id %>
+  <%= f.text_field :receiver_id ,:class => "user_name","data-pre" => @users.to_json %>
+  
+  <%= f.label :message_content %>
+  <%= f.text_area :message_content,  :class => "txt_area_size" %>
+  
+  <%= f.hidden_field :user_id , :value => current_user.id %>
+  <%= f.submit 'Send', :class => "btn btn-primary" %>
+
+<% end %>
+<% end %>
+
+<%= link_to 'Back' , messages_select_inbox_outbox_path %>
+
+   
+</div>
+</div>
+</div>
+<br/><br/>
+<br/><br/>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  level: MyString
+  semester: MyString
+  name: MyString
+  subject_name: MyString
+  attachment: MyString
+  added_by: MyString
+
+two:
+  level: MyString
+  semester: MyString
+  name: MyString
+  subject_name: MyString
+  attachment: MyString
+  added_by: MyString

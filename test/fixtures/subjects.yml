@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  level: MyText
+  semester: MyText
+  name: MyText
+  credits: 9.99
+
+two:
+  level: MyText
+  semester: MyText
+  name: MyText
+  credits: 9.99

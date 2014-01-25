@@ -1,0 +1,25 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+ <div class="alert alert-info">
+	     
+	<h4>Please Select the Semester to view the questions and answers</h4>
+	
+	 
+  <br/>
+<% @count_level = 1 %>  
+<% @count_semester = 1 %>
+<ul>
+ <% while @count_level < 5  do %>
+     <% while @count_semester < 3  do %>
+		   <li><%= link_to "Level " << @count_level.to_s + " Semester "<< @count_semester.to_s, questions_select_subject_path(:lev => @count_level.to_s , :sem=> @count_semester.to_s)  %></li> 
+		   <% @count_semester = @count_semester + 1 %>
+     <% end %>
+  <% @count_semester = 1 %>	 
+  <% @count_level = @count_level + 1 %>
+<% end %>  
+</ul>
+ </div>
+ </div>
+ </div>
+ </div>

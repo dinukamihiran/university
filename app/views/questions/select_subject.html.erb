@@ -1,0 +1,29 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+ <div class="alert alert-info">
+	     
+	<h4>Please Select the Subject to view the Questions</h4>	 
+  <br/> 
+ </div>
+ <table class="table table-bordered table-striped">
+ <thead>
+	 <tr>
+	  <th>Subject Code </th>
+	  <th>Subject Name </th>
+	 </tr>
+  </thead>
+  <tbody>
+ <% @subjects.each do |subject| %>
+  <tr>
+	  <td><%= subject.subject_code %> 
+	  <td><%= link_to "#{subject.name}" , questions_all_questions_path(:sub_id => subject.id, :sub_name => subject.name) %> </td>
+  </tr>
+ <% end %>
+ </tbody>
+</table>
+<%= link_to "Back" ,questions_select_semester_path %>
+ 
+ </div>
+ </div>
+ </div>

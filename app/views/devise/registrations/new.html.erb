@@ -1,0 +1,58 @@
+<H3><center>Welcome to Student information system</center></H3>
+<div class="jumbotron">
+  <div class="container">
+   <div class="hero-unit" style="width: 50%;margin-left: 20%;margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+	<h3><center>Sign up</center></h3>
+ 
+ <table border = "0" >
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %> 
+  <tr><td colspan="3"><%= devise_error_messages! %>  </td></tr>
+
+<tr><td>
+  <%= f.label :email %>
+</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+  <%= f.email_field :email, :autofocus => true %> 
+</td></tr>
+<tr><td> 
+  <%= f.label :full_name %>  
+  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+  <%= f.text_field :full_name %>  
+ </td></tr>
+<tr><td> 
+  <%= f.label :batch %>  
+ </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+   <%= f.text_field :batch %>  
+ </td></tr>
+<tr><td>
+ 
+  <%= f.label :degree %>  
+  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+     <%= f.select(:degree, options_for_select([["IT", "IT"], ["ITM", "ITM"], ]) ,{}, { })%>   
+			 
+  </td></tr>
+  <tr><td>
+ 
+  <%= f.label :username %>  
+  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+  <%= f.text_field :username %> 
+  </td></tr>
+<tr><td> 
+  
+  <%= f.label :password %>   
+  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+  <%= f.password_field :password %>  
+  </td></tr>
+<tr><td>
+   <%= f.label :password_confirmation %>   
+  </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+   <%= f.password_field :password_confirmation %> <br/> 
+ </td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>  
+   <%= f.submit "Sign up" , :class => 'btn btn-primary'%>   or
+<% end %>
+  
+<%= link_to "Sign In" ,new_user_session_path, :class => 'btn btn-link' %>
+</table>  
+</div>
+</div>
+</div>

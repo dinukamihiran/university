@@ -1,0 +1,59 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+ <div class="alert alert-info">
+	     
+	<h4>Please Select the Question to view the Answers</h4>	 
+  <br/> 
+ </div>
+ <table class="table table-bordered table-striped">
+ <thead>
+	 <tr>
+	  <th>Question </th>
+	  <th>Asked By </th>
+	  <th>No of Answers </th>
+	  <th>&nbsp;</th>
+	  <th>&nbsp;</th>
+	 </tr>
+  </thead>
+  <tbody> 
+  
+  <% $question_container = Array.new %>
+   
+  <% $no_of_questions =0 %>
+   
+  <% if @questions.blank? %>
+  <tr><td colspan="4">Currently there is no questions</td></tr>
+  <% end %>
+ <% @questions.each do |question| %>
+  <tr>
+	  <td>
+	     <%= link_to "#{question.question_content}" , questions_all_answers_path(:question_id => question.id , :question_array_id => $no_of_questions) %> 
+	     <br/>
+		 Asked at : <%= time_ago_in_words(question.created_at) %> ago
+	  </td>
+	  <td><%= question.user.full_name %></td>
+	  <td><%= question.answers.count %> </td>
+	  <td><%= link_to "Add Answer" ,  questions_all_answers_path(:question_id => question.id, :question_array_id => $no_of_questions) ,:class => "btn btn-warning"  %></td>
+	  <td>
+	    <% if current_user.id == question.user_id %>
+			   <%= button_to "Remove Question" ,questions_delete_question_path(:id => question.id) ,method: :delete ,class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{question.id}?" %>
+		<% end %>
+		
+		<% $question_container[$no_of_questions] = question.question_content %>
+		 <% $no_of_questions = $no_of_questions + 1%>
+		 
+		
+	  </td>
+	 
+  </tr>
+ <% end %>
+ </tbody>
+</table> 
+<%= link_to "Add New Question" ,  new_question_path(:subject_id => $selected_subject_id), :class => "btn btn-primary"  %>
+or
+<%= link_to "Back", questions_select_subject_path(:lev => $level , :sem=> $semester) %>
+ 
+ </div>
+ </div>
+ </div>

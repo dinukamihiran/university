@@ -1,0 +1,32 @@
+//calculate haversine distance for linear distance
+double haversine_km(double currentLat, double currentLong)
+{
+    double destLat;
+    double destLong;
+    destLat=//Assign destination latitude from DB
+    destLong=//Assign destination longitude from DB
+       
+    double dlong = (destLong - currentLong) * d2r;
+    double dlat = (destLat - currentLat) * d2r;
+    double a = pow(sin(dlat/2.0), 2) + cos(currentLat*d2r) * cos(destLat*d2r) * pow(sin(dlong/2.0), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1-a));
+    double d = 6367 * c;
+
+    return d;
+}
+
+bool hasReached(double currentLat, double currentLong)
+{
+	double dist;
+	bool reached;//write this value to the DB
+	dist=haversine_km(currentLat,currentLong);//pass current latitude and longitude from DB, this function returns the distance in km
+	if(dist<0.1)//checks if its within 100m of destination...better assign a variable instead of directly putting 100m,so that it will enable us to change boundary
+	{
+		reached=true;
+	}
+	else
+		reached=false;
+		
+
+	return reached;	
+}

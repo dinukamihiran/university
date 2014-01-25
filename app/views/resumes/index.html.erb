@@ -1,0 +1,79 @@
+ <div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+   
+    <% if $level.to_f > 4 or $semester.to_f > 2 %>
+	   <div class="alert alert-danger">The level or semester doesn't exists</div>
+	 
+	<% else %>
+	   <div class="alert alert-info">
+	  
+			  Level :<%= $level %> <br/>
+			  Semester :<%= $semester %> <br/>
+	 Please click the button to add new files to Level <%= $level %> Semester <%= $semester %>  
+<%= link_to "New File", new_resume_path, class: "btn btn-warning" %>
+     
+	 </div>
+ 
+   <div class = "navbar-form pull-right">
+         <%= search_form_for @search  do |f|   %>
+		    <%= f.text_field :name_cont , :placeholder => "Search by name" %>		  
+			<%= f.hidden_field :lev , :value => $level %>
+			<%= f.hidden_field :sem , :value => $semester %>			
+		    <%= f.submit "Search", class: "btn btn-default"  %> 
+		<% end %>
+		  
+   </div>
+  
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th><%= sortable "name" %></th>
+	  <th>Subject</th>
+      <th>Download Link</th>
+	  <th><%= sortable "created_at" %></th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% if @resumes.blank? %>
+     <tr><td colspan='5'>Searching files for Level <%= $level %> Semester <%= $semester %>   doesn't exists.</td></tr>
+   <% else %>
+     <% @resumes.each do |resume| %>
+      <tr>
+        <td><%= resume.name %></td>
+		<td><%= resume.subject.name %></td>
+        <td><%= link_to "Download Resume", resume.attachment_url %></td>
+		<td>
+		By : <%= resume.user.full_name %><br/>
+		<%= time_ago_in_words(resume.created_at) %> ago
+		</td>
+		  <td>
+		     <% if current_user.id == resume.user_id %> 
+              <%= button_to "Delete",  resume, method: :delete, class: "btn btn-danger", confirm: "Are you sure that you wish to delete #{resume.name}?" %>
+			 <% end %>
+		 </td>
+      </tr>
+    <% end %>
+   <% end %>
+  </tbody>
+</table>
+
+<% end %> 
+
+
+<div class="digg_pagination">
+      <div clas="page_info">
+        <%= page_entries_info @resumes %>
+      </div>
+      <%= will_paginate @resumes, :container => false %>
+    </div>
+
+<%= link_to "Back", resumes_select_semester_path %>
+  
+<br/>
+<br/>
+<br/>
+</div>
+</div>
+</div>

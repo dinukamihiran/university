@@ -1,0 +1,47 @@
+<div class="jumbotron">
+  <div class="container">
+   <div style="margin-top: -1%;padding-left: 10%; padding-top: -10%" >
+    
+	<% if !@resume.errors.empty? %>
+  <div class="alert alert-error">
+    <ul>
+      <% @resume.errors.full_messages.each do |msg| %> 
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+ <div class = "alert alert-warning">
+<h4>Add new file to the Level <%= $level %> Semester <%= $semester %>  </h4>
+ 	  
+   
+  <%= form_for @resume, html: { multipart: true } do |f| %>  
+    
+	<%= f.label :level %>
+    <%= f.text_field :level,:readonly => true , :value => $level %>
+	
+	<%= f.label :semester %>
+    <%= f.text_field :semester ,:readonly => true , :value => $semester %>
+	<div class = "alert alert-info">
+	 <%= f.label :subject_id ,"Subject : (please select others, if you don't know the attachment belongs to which subject)"  %> 
+    <%= f.text_field :subject_id ,:class => "sub_name","data-pre" => @subjects.to_json %> 
+	</div> 
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+	
+    <%= f.label :attachment %>
+    <%= f.file_field :attachment  %>
+	
+	<%= f.hidden_field :user_id, :value => current_user.id %>
+	<br/><br/>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+	or <%= link_to "Back", resumes_path(:lev => $level , :sem=> $semester) %>
+  
+  <% end %>  
+   
+</div>
+</div>
+</div>
+<br/><br/>
+<br/><br/>
